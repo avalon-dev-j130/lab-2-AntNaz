@@ -214,6 +214,7 @@ public class ProductCode {
      * @throws SQLException 
      */
     public static Collection<ProductCode> all(Connection connection) throws SQLException {
+        String query = "SELECT * FROM PRODUCT_CODE";
         try (PreparedStatement statement = getSelectQuery(connection)) {
             try (ResultSet result = statement.executeQuery()) {
                 return convert(result);
