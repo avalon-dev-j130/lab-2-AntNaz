@@ -90,7 +90,7 @@ public class Main {
     private static Connection getConnection() throws SQLException, IOException {
         String url = getUrl();
         String user = "app";
-        String password = "password";
+        String password = "app";
         return DriverManager.getConnection(url, user, password);
         /*
          * TODO #04 Реализуйте метод getConnection
