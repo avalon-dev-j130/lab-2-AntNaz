@@ -27,10 +27,11 @@ public class Main {
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
          */
         try (Connection connection = getConnection()) {
-            ProductCode code = new ProductCode("MO", 'N', "Movies");
+            ProductCode code = new ProductCode("MO", 'N', "Movies");     
+            printAllCodes(connection);
             code.save(connection);
             printAllCodes(connection);
-
+            System.out.println("==============");
             code.setCode("MV");
             code.save(connection);
             printAllCodes(connection);
@@ -56,9 +57,11 @@ public class Main {
      * 
      * @return URL в виде объекта класса {@link String}
      */
+    
     private static String getUrl() throws IOException {
-        Properties prop = getProperties();
-        return "jdbc:derby://localhost:1527/sample";
+        
+        return getProperties().getProperty("database.driver") + "://" + getProperties().getProperty("database.host") + ":" + getProperties().getProperty("database.port") + "/" + getProperties().getProperty("database.baseName");
+        //return "jdbc:derby://localhost:1527/sample";
         /*
          * TODO #02 Реализуйте метод getUrl
          */
@@ -70,9 +73,11 @@ public class Main {
      * @return Объект класса {@link Properties}, содержащий параметры user и 
      * password
      */
+    
+    
     private static Properties getProperties() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
-        try (FileInputStream prop = new FileInputStream("../resurses/properties.properties")) {
+        try (FileInputStream prop = new FileInputStream("C:/Users/Anton/Documents/NetBeansProjects/Course3/lab-2-AntNaz/src/resurses/configs.properties")) {
             properties.load(prop);
         };
         return properties;
@@ -81,6 +86,7 @@ public class Main {
          */
         //throw new UnsupportedOperationException("Not implemented yet!");
     }
+
     /**
      * Возвращает соединение с базой данных Sample
      * 
@@ -89,8 +95,8 @@ public class Main {
      */
     private static Connection getConnection() throws SQLException, IOException {
         String url = getUrl();
-        String user = "app";
-        String password = "app";
+        String user = getProperties().getProperty("database.user");
+        String password = getProperties().getProperty("database.password");
         return DriverManager.getConnection(url, user, password);
         /*
          * TODO #04 Реализуйте метод getConnection
