@@ -131,9 +131,7 @@ public class ProductCode {
         if (obj == this) return true;
         if (obj == null || this.getClass() != obj.getClass()) return false;
         ProductCode other = (ProductCode) obj;
-        if (!Objects.equals(code, other.getCode()) ||
-            (!Objects.equals(description, other.getDescription()) ||
-            (!Objects.equals(discountCode, other.getDiscountCode())))) return false;
+        if (!Objects.equals(code, other.getCode())) return false;
         return true;
         
         /*
@@ -196,7 +194,7 @@ public class ProductCode {
      * @return Запрос в виде объекта класса {@link PreparedStatement}
      */
     public static PreparedStatement getUpdateQuery(Connection connection) throws SQLException {
-        String sql = "update PRODUCT_CODE set DISCOUNT_CODE = ?, set DESCRIPTION = ?, set PROD_CODE = ? ";
+        String sql = "update PRODUCT_CODE set DESCRIPTION = ?, DISCOUNT_CODE = ? where PROD_CODE = ?";
         PreparedStatement state = connection.prepareCall(sql);
         return state;
         /*
@@ -237,11 +235,10 @@ public class ProductCode {
         Collection <ProductCode> prodCode = all(connection);
         if (prodCode.contains(this)) {
             try (PreparedStatement statement = getUpdateQuery(connection)){
-                statement.setString(1, String.valueOf(discountCode));
-                statement.setString(2, description);
+                statement.setString(1, description);
+                statement.setString(2, String.valueOf(discountCode));
                 statement.setString(3, code);
                 statement.executeUpdate();
-                
             }
         
         }

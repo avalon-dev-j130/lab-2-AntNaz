@@ -29,10 +29,15 @@ public class Main {
         try (Connection connection = getConnection()) {
             ProductCode code = new ProductCode("MO", 'N', "Movies");     
             printAllCodes(connection);
+            System.out.println("==============");
             code.save(connection);
             printAllCodes(connection);
             System.out.println("==============");
             code.setCode("MV");
+            code.save(connection);
+            printAllCodes(connection);
+            System.out.println("==============");
+            code.setDescription("MyDesc");
             code.save(connection);
             printAllCodes(connection);
         }
@@ -77,7 +82,7 @@ public class Main {
     
     private static Properties getProperties() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
-        try (FileInputStream prop = new FileInputStream("C:/Users/Anton/Documents/NetBeansProjects/Course3/lab-2-AntNaz/src/resurses/configs.properties")) {
+        try (FileInputStream prop = new FileInputStream("../src/resurses/configs.properties")) {
             properties.load(prop);
         };
         return properties;
