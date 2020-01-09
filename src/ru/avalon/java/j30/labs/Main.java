@@ -40,6 +40,7 @@ public class Main {
             code.setDescription("MyDesc");
             code.save(connection);
             printAllCodes(connection);
+            
         }
         /*
          * TODO #14 Средствами отладчика проверьте корректность работы программы
@@ -65,7 +66,10 @@ public class Main {
     
     private static String getUrl() throws IOException {
         
-        return getProperties().getProperty("database.driver") + "://" + getProperties().getProperty("database.host") + ":" + getProperties().getProperty("database.port") + "/" + getProperties().getProperty("database.baseName");
+        return getProperties().getProperty("database.driver")
+                + "://" + getProperties().getProperty("database.host")
+                + ":" + getProperties().getProperty("database.port")
+                + "/" + getProperties().getProperty("database.baseName");
         //return "jdbc:derby://localhost:1527/sample";
         /*
          * TODO #02 Реализуйте метод getUrl
@@ -82,9 +86,10 @@ public class Main {
     
     private static Properties getProperties() throws FileNotFoundException, IOException {
         Properties properties = new Properties();
-        try (FileInputStream prop = new FileInputStream("../src/resurses/configs.properties")) {
-            properties.load(prop);
-        };
+        
+       // try (FileInputStream prop = new FileInputStream("../src/resurses/configs.properties")) {
+            properties.load(ClassLoader.getSystemResourceAsStream("resurses/configs.properties"));
+       // };
         return properties;
         /*
          * TODO #03 Реализуйте метод getProperties

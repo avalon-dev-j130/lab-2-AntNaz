@@ -131,8 +131,7 @@ public class ProductCode {
         if (obj == this) return true;
         if (obj == null || this.getClass() != obj.getClass()) return false;
         ProductCode other = (ProductCode) obj;
-        if (!Objects.equals(code, other.getCode())) return false;
-        return true;
+        return Objects.equals(code, other.getCode());
         
         /*
          * TODO #07 Реализуйте метод equals
